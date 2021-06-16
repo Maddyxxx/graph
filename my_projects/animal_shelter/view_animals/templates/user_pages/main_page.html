@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Приют</title>
+</head>
+<a href="/main_page">Назад</a>
+<h2>{{ shelter.name }}</h2>
+<div>{{ shelter.address }}</div>
+<body>
+    {% if animals %}
+    <ul>
+        {% for animal in animals %}
+        <li>
+        <figure>
+            {{ animal.name }}, {{ animal.special_signs }}
+            <form method="get" action="/animals/{{ animal.id }}/"><button>Подробнее</button></form>
+        </figure>
+        </li>
+        {% endfor %}
+    </ul>
+        Всего животных в приюте {{ all_count }}
+    {% else %}
+        <p>Животных в приюте нет</p>
+    {% endif %}
+<p>
+<form method="get" action="/animal/register"><button>Зарегистрировать новое животное</button></form>
+</body>
+</html>

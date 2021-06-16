@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ animal.name }}</title>
+</head>
+<body>
+<h3>{{ animal.name }}</h3>
+<ul>
+    <li>Возраст {{ animal.age }}</li>
+    <li>Дата прибытия: {{ animal.arrival_date }}</li>
+    <li>Вес {{ animal.weight }}</li>
+    <li>Рост {{ animal.height }}</li>
+    <li>Особые приметы: {{ animal.special_signs }}</li>
+    <li>Приют: {{ animal.shelter.name }}, адрес: {{ animal.shelter.address }}</li>
+</ul>
+<form method="get" action="/animals/{{ animal_id }}/edit/"><button>Редактировать</button></form>
+</body>
+</html>

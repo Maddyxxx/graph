@@ -1,3 +1,5 @@
+import json
+
 
 class Calculate:
 
@@ -5,10 +7,20 @@ class Calculate:
         self.data = data
 
     def prepare(self):
-        max_len, w_data, result = 0, [], []
+        """
+        Данная функция приводит исходные данные к нужному формату:
+        возвращает:
+            - w_data - список исходных чисел в нужном формате [int, int, ...]
+            - result, - список из нулей длины max_len
+            - max_vec_len - максимальная длина вектора
+        """
+        w_data, result, max_len = [], [], 0
 
         for item in self.data:
-            new_item = [int(i) for i in item.split(',')]
+            try:
+                new_item = [int(i) for i in item.split(',')]
+            except:
+                new_item = [float(i) for i in item.split(',')]
             w_data.append(new_item)
 
         for i in w_data:
@@ -24,6 +36,9 @@ class Calculate:
         return w_data, result, max_len
 
     def add(self):
+        """
+        Сложение векторов
+        """
         data, result, max_len = self.prepare()
         for i in range(max_len):
             for graph in data:
@@ -31,18 +46,23 @@ class Calculate:
         return str(result)[1:-1]
 
     def multiple(self):
+        """
+        Умножение векторов
+        """
         data, result, max_len = self.prepare()
         mul_result = [1 for _ in result]
-        print(data)
         for i in range(max_len):
             for graph in data:
-                print(mul_result[i])
                 mul_result[i] *= graph.pop(0)
         return str(mul_result)[1:-1]
 
     def count_length_vector(self):
+        """
+        Подсчет длины вектора/векторов
+        """
         result = []
-        for graph in self.data:
+        data = self.prepare()[0]
+        for graph in data:
             length = 0
             for num in graph:
                 length += num ** 2
@@ -50,15 +70,38 @@ class Calculate:
         return str(result)[1:-1]
 
 
-def calculate(data, number):
+def calculate(data, operation):
+    """
+    Принимает на вход:
+     - строковое значение векторов формата '['vector_1', 'vector_2',....]'
+     - тип операции: 'mul'/'add'/'len'
+
+    Вычисляет результат и возвращает его в строковом виде
+    При неудачном вычислении возвращает ошибку
+    """
     calc = Calculate(data)
-    if number == 1:
-        result = calc.add()
-    elif number == 2:
-        result = calc.multiple()
-    elif number == 3:
-        result = calc.count_length_vector()
+    operations = ['add', 'mul', 'length']
+    if operation in operations:
+        try:
+            if operation == 'add':
+                result = calc.add()
+            elif operation == 'mul':
+                result = calc.multiple()
+            else:
+                result = calc.count_length_vector()
+        except Exception as exc:
+            result = str(exc)
     else:
-        return 'ошибка'
+        return 'Ошибка! Неверная операция'
     return result
+
+
+def resize(data):
+    """
+    Если добавляется число в вектор, то для избежания критических ошибок
+    при выполнении операций в других векторах добавляется нулевая компонента
+    """
+    calc = Calculate(data)
+    resized = calc.prepare()[0]
+    return [str(i)[1:-1] for i in resized]
 

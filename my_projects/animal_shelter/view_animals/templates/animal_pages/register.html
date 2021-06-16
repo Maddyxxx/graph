@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Регистрация животного</title>
+</head>
+<body>
+ <a href="/main_page">Назад</a>
+ <h2>Регистрация нового животного</h2>
+<form method="post" action="/animal/register/">
+    {% csrf_token %}
+    {{ animal_form.as_p }}
+    <button type="submit">Зарегистрировать</button>
+</form>
+</body>
+</html>

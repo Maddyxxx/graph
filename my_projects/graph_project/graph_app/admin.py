@@ -1,10 +1,13 @@
 from django.contrib import admin
-from .models import Graph
+from .models import Graph, Vector
 
 
 @admin.register(Graph)
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ['vector', 'operation']
-    list_filter = ['vector']
-    search_fields = ['vector']
+    list_display = ['id', 'operation']
+    search_fields = ['id']
 
+
+@admin.register(Vector)
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ['id', 'vector']
